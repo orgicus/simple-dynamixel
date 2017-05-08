@@ -522,7 +522,7 @@ bool AsyncSerial::isOpen() const
 
 bool AsyncSerial::errorStatus() const
 {
-    lock_guard<mutex> l(pimpl->errorMutex);
+     boost::lock_guard< boost::mutex> l(pimpl->errorMutex);
     return pimpl->error;
 }
 
@@ -612,12 +612,11 @@ void AsyncSerial::doClose()
 
 void AsyncSerial::setErrorStatus(bool e)
 {
-    lock_guard<mutex> l(pimpl->errorMutex);
+     boost::lock_guard<boost::mutex> l(pimpl->errorMutex);
     pimpl->error=e;
 }
 
-void AsyncSerial::setReadCallback(const
-        function<void (const char*, size_t)>& callback)
+void AsyncSerial::setReadCallback(const boost::function<void (const char*, size_t)>& callback)
 {
     pimpl->callback=callback;
 }
